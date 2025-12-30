@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camila Priolli | Alta Moda & Education</title>
+    
+    <!-- Tailwind CSS (Framework de Estilo Avançado) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Playfair Display (Serif/Premium) e Montserrat (Sans/Moderno) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Configurações de Cores e Estilos Personalizados -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            pink: '#F3E5E5',      // Rosa muito pálido (fundo)
+                            rose: '#D4A5A5',      // Rosa antigo (detalhes)
+                            gold: '#C5A059',      // Dourado fosco (luxo)
+                            dark: '#1A1A1A',      // Preto suave
+                            light: '#FAFAFA'      // Branco off-white
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Montserrat"', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'slide-in': 'slideIn 0.5s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        slideIn: {
+                            '0%': { transform: 'translateX(100%)' },
+                            '100%': { transform: 'translateX(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Estilos Globais e Ajustes Finos */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #FAFAFA;
+            color: #1A1A1A;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Efeito de Vidro (Glassmorphism) */
+        .glass {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 165, 165, 0.2);
+        }
+
+        /* Scrollbar Personalizada */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F3E5E5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D4A5A5;
+        }
+
+        /* Inputs Personalizados */
+        .input-premium {
+            border: 1px solid #e5e7eb;
+            background: #fff;
+            transition: all 0.3s ease;
+        }
+        .input-premium:focus {
+            outline: none;
+            border-color: #D4A5A5;
+            box-shadow: 0 0 0 3px rgba(212, 165, 165, 0.1);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Notificação Toast (Escondido inicialmente) -->
+    <div id="toast" class="fixed top-24 right-5 z-50 bg-brand-dark text-white px-6 py-4 rounded shadow-2xl transform translate-x-full transition-transform duration-300 flex items-center gap-3">
+        <i class="fas fa-check-circle text-brand-rose"></i>
+        <span id="toast-msg">Mensagem aqui</span>
+    </div>
+
+    <!-- Navegação -->
+    <nav class="fixed w-full z-40 top-0 glass transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <span class="font-serif text-2xl tracking-widest font-semibold text-brand-dark uppercase">
+                        Camila <span class="text-brand-rose">Priolli</span>
+                    </span>
+                </div>
+                
+                <!-- Menu Desktop -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#collection" class="text-xs uppercase tracking-[0.2em] hover:text-brand-rose transition-colors">Coleção</a>
+                    <a href="#course" class="text-xs uppercase tracking-[0.2em] hover:text-brand-rose transition-colors">Masterclass</a>
+                    <a href="#contact" class="text-xs uppercase tracking-[0.2em] hover:text-brand-rose transition-colors">Contato</a>
+                    <button class="text-brand-dark hover:text-brand-rose transition-colors">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button class="text-brand-dark hover:text-brand-rose transition-colors relative">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="absolute -top-1 -right-2 bg-brand-rose text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                    </button>
+                </div>
+
+                <!-- Menu Mobile Icon -->
+                <div class="md:hidden flex items-center">
+                    <button class="text-brand-dark text-xl">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative h-screen flex items-center justify-center overflow-hidden">
+        <!-- Background com overlay suave -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070&auto=format&fit=crop" 
+                 alt="Fashion Background" 
+                 class="w-full h-full object-cover object-center brightness-[0.85]">
+        </div>
+        
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto animate-fade-in-up">
+            <p class="text-white text-xs md:text-sm uppercase tracking-[0.4em] mb-4">Nova Coleção 2025</p>
+            <h1 class="text-5xl md:text-7xl lg:text-8xl text-white font-serif italic mb-6 leading-tight">
+                Elegância <br> <span class="not-italic">Atemporal</span>
+            </h1>
+            <p class="text-gray-100 text-sm md:text-lg font-light mb-10 max-w-2xl mx-auto leading-relaxed">
+                Descubra a sofisticação em cada detalhe. Peças exclusivas desenhadas para a mulher moderna que não abre mão da excelência.
+            </p>
+            <a href="#collection" class="inline-block bg-white text-brand-dark px-10 py-4 text-xs font-semibold uppercase tracking-widest hover:bg-brand-rose hover:text-white transition-all duration-300">
+                Ver Coleção
+            </a>
+        </div>
+    </header>
+
+    <!-- Seção de Produtos (Shop) -->
+    <section id="collection" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-serif text-brand-dark mb-4">Curadoria Exclusiva</h2>
+                <div class="w-16 h-0.5 bg-brand-rose mx-auto"></div>
+            </div>
+
+            <!-- Grid de Produtos -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
+                
+                <!-- Produto 1 -->
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden bg-gray-100 aspect-[3/4]">
+                        <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?q=80&w=1983&auto=format&fit=crop" alt="Vestido Silk" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                        <button onclick="openCheckout('Vestido Silk Midi Rose', 890.00, 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?q=80&w=1983&auto=format&fit=crop')" class="absolute bottom-6 left-1/2 transform -translate-x-1/2 translate-y-20 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 bg-white text-brand-dark px-8 py-3 text-xs uppercase tracking-widest shadow-lg transition-all duration-300 hover:bg-brand-dark hover:text-white w-3/4 text-center">
+                            Comprar
+                        </button>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <h3 class="font-serif text-lg text-brand-dark">Vestido Silk Midi Rose</h3>
+                        <p class="text-gray-500 text-sm mt-1">R$ 890,00</p>
+                    </div>
+                </div>
+
+                <!-- Produto 2 -->
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden bg-gray-100 aspect-[3/4]">
+                        <img src="https://images.unsplash.com/photo-1539008835657-9e8e9680c956?q=80&w=1974&auto=format&fit=crop" alt="Blazer Alfaiataria" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                        <button onclick="openCheckout('Blazer Alfaiataria Premium', 1250.00, 'https://images.unsplash.com/photo-1539008835657-9e8e9680c956?q=80&w=1974&auto=format&fit=crop')" class="absolute bottom-6 left-1/2 transform -translate-x-1/2 translate-y-20 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 bg-white text-brand-dark px-8 py-3 text-xs uppercase tracking-widest shadow-lg transition-all duration-300 hover:bg-brand-dark hover:text-white w-3/4 text-center">
+                            Comprar
+                        </button>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <h3 class="font-serif text-lg text-brand-dark">Blazer Alfaiataria Premium</h3>
+                        <p class="text-gray-500 text-sm mt-1">R$ 1.250,00</p>
+                    </div>
+                </div>
+
+                <!-- Produto 3 -->
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden bg-gray-100 aspect-[3/4]">
+                        <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=2080&auto=format&fit=crop" alt="Scarpin Italiano" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                        <button onclick="openCheckout('Scarpin Couro Italiano', 680.00, 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=2080&auto=format&fit=crop')" class="absolute bottom-6 left-1/2 transform -translate-x-1/2 translate-y-20 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 bg-white text-brand-dark px-8 py-3 text-xs uppercase tracking-widest shadow-lg transition-all duration-300 hover:bg-brand-dark hover:text-white w-3/4 text-center">
+                            Comprar
+                        </button>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <h3 class="font-serif text-lg text-brand-dark">Scarpin Couro Italiano</h3>
+                        <p class="text-gray-500 text-sm mt-1">R$ 680,00</p>
+                    </div>
+                </div>
+
+                 <!-- Produto 4 -->
+                 <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden bg-gray-100 aspect-[3/4]">
+                        <img src="https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?q=80&w=1976&auto=format&fit=crop" alt="Blusa Seda Off-White" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                        <button onclick="openCheckout('Blusa Seda Off-White', 450.00, 'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?q=80&w=1976&auto=format&fit=crop')" class="absolute bottom-6 left-1/2 transform -translate-x-1/2 translate-y-20 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 bg-white text-brand-dark px-8 py-3 text-xs uppercase tracking-widest shadow-lg transition-all duration-300 hover:bg-brand-dark hover:text-white w-3/4 text-center">
+                            Comprar
+                        </button>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <h3 class="font-serif text-lg text-brand-dark">Blusa Seda Off-White</h3>
+                        <p class="text-gray-500 text-sm mt-1">R$ 450,00</p>
+                    </div>
+                </div>
+
+                <!-- Produto 5 -->
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden bg-gray-100 aspect-[3/4]">
+                        <img src="https://images.unsplash.com/photo-1583846783214-7229a91b20ed?q=80&w=1935&auto=format&fit=crop" alt="Saia Plissada Gold" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                        <button onclick="openCheckout('Saia Plissada Gold', 520.00, 'https://images.unsplash.com/photo-1583846783214-7229a91b20ed?q=80&w=1935&auto=format&fit=crop')" class="absolute bottom-6 left-1/2 transform -translate-x-1/2 translate-y-20 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 bg-white text-brand-dark px-8 py-3 text-xs uppercase tracking-widest shadow-lg transition-all duration-300 hover:bg-brand-dark hover:text-white w-3/4 text-center">
+                            Comprar
+                        </button>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <h3 class="font-serif text-lg text-brand-dark">Saia Plissada Gold</h3>
+                        <p class="text-gray-500 text-sm mt-1">R$ 520,00</p>
+                    </div>
+                </div>
+
+                <!-- Produto 6 -->
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden bg-gray-100 aspect-[3/4]">
+                        <img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=1974&auto=format&fit=crop" alt="Calça Palazzo Preta" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                        <button onclick="openCheckout('Calça Palazzo Preta', 680.00, 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=1974&auto=format&fit=crop')" class="absolute bottom-6 left-1/2 transform -translate-x-1/2 translate-y-20 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 bg-white text-brand-dark px-8 py-3 text-xs uppercase tracking-widest shadow-lg transition-all duration-300 hover:bg-brand-dark hover:text-white w-3/4 text-center">
+                            Comprar
+                        </button>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <h3 class="font-serif text-lg text-brand-dark">Calça Palazzo Preta</h3>
+                        <p class="text-gray-500 text-sm mt-1">R$ 680,00</p>
+                    </div>
+                </div>
+
+                <!-- Produto 7 -->
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden bg-gray-100 aspect-[3/4]">
+                        <img src="https://images.unsplash.com/photo-1566174053879-31528523f8ae?q=80&w=1908&auto=format&fit=crop" alt="Vestido Longo Festa Nude" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                        <button onclick="openCheckout('Vestido Longo Festa Nude', 1590.00, 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?q=80&w=1908&auto=format&fit=crop')" class="absolute bottom-6 left-1/2 transform -translate-x-1/2 translate-y-20 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 bg-white text-brand-dark px-8 py-3 text-xs uppercase tracking-widest shadow-lg transition-all duration-300 hover:bg-brand-dark hover:text-white w-3/4 text-center">
+                            Comprar
+                        </button>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <h3 class="font-serif text-lg text-brand-dark">Vestido Longo Festa Nude</h3>
+                        <p class="text-gray-500 text-sm mt-1">R$ 1.590,00</p>
+                    </div>
+                </div>
+
+                <!-- Produto 8 -->
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden bg-gray-100 aspect-[3/4]">
+                        <img src="https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?q=80&w=1963&auto=format&fit=crop" alt="Bolsa Clutch Dourada" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                        <button onclick="openCheckout('Bolsa Clutch Dourada', 290.00, 'https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?q=80&w=1963&auto=format&fit=crop')" class="absolute bottom-6 left-1/2 transform -translate-x-1/2 translate-y-20 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 bg-white text-brand-dark px-8 py-3 text-xs uppercase tracking-widest shadow-lg transition-all duration-300 hover:bg-brand-dark hover:text-white w-3/4 text-center">
+                            Comprar
+                        </button>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <h3 class="font-serif text-lg text-brand-dark">Bolsa Clutch Dourada</h3>
+                        <p class="text-gray-500 text-sm mt-1">R$ 290,00</p>
+                    </div>
+                </div>
+
+                <!-- Produto 9 -->
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden bg-gray-100 aspect-[3/4]">
+                        <img src="https://images.unsplash.com/photo-1551488852-d8048a51031f?q=80&w=1974&auto=format&fit=crop" alt="Conjunto Tweed Clássico" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                        <button onclick="openCheckout('Conjunto Tweed Clássico', 1100.00, 'https://images.unsplash.com/photo-1551488852-d8048a51031f?q=80&w=1974&auto=format&fit=crop')" class="absolute bottom-6 left-1/2 transform -translate-x-1/2 translate-y-20 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 bg-white text-brand-dark px-8 py-3 text-xs uppercase tracking-widest shadow-lg transition-all duration-300 hover:bg-brand-dark hover:text-white w-3/4 text-center">
+                            Comprar
+                        </button>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <h3 class="font-serif text-lg text-brand-dark">Conjunto Tweed Clássico</h3>
+                        <p class="text-gray-500 text-sm mt-1">R$ 1.100,00</p>
+                    </div>
+                </div>
+
+                <!-- Produto 10 -->
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden bg-gray-100 aspect-[3/4]">
+                        <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=2012&auto=format&fit=crop" alt="Sandália Tiras Finas" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                        <button onclick="openCheckout('Sandália Tiras Finas', 420.00, 'https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=2012&auto=format&fit=crop')" class="absolute bottom-6 left-1/2 transform -translate-x-1/2 translate-y-20 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 bg-white text-brand-dark px-8 py-3 text-xs uppercase tracking-widest shadow-lg transition-all duration-300 hover:bg-brand-dark hover:text-white w-3/4 text-center">
+                            Comprar
+                        </button>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <h3 class="font-serif text-lg text-brand-dark">Sandália Tiras Finas</h3>
+                        <p class="text-gray-500 text-sm mt-1">R$ 420,00</p>
+                    </div>
+                </div>
+
+                <!-- Produto 11 -->
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden bg-gray-100 aspect-[3/4]">
+                        <img src="https://images.unsplash.com/photo-1550614000-4b9519e0076a?q=80&w=1974&auto=format&fit=crop" alt="Jaqueta Couro Eco" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                        <button onclick="openCheckout('Jaqueta Couro Eco', 850.00, 'https://images.unsplash.com/photo-1550614000-4b9519e0076a?q=80&w=1974&auto=format&fit=crop')" class="absolute bottom-6 left-1/2 transform -translate-x-1/2 translate-y-20 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 bg-white text-brand-dark px-8 py-3 text-xs uppercase tracking-widest shadow-lg transition-all duration-300 hover:bg-brand-dark hover:text-white w-3/4 text-center">
+                            Comprar
+                        </button>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <h3 class="font-serif text-lg text-brand-dark">Jaqueta Couro Eco</h3>
+                        <p class="text-gray-500 text-sm mt-1">R$ 850,00</p>
+                    </div>
+                </div>
+
+                 <!-- Produto 12 -->
+                 <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden bg-gray-100 aspect-[3/4]">
+                        <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=1964&auto=format&fit=crop" alt="Camisa Social Oxford" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                        <button onclick="openCheckout('Camisa Social Oxford', 390.00, 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=1964&auto=format&fit=crop')" class="absolute bottom-6 left-1/2 transform -translate-x-1/2 translate-y-20 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 bg-white text-brand-dark px-8 py-3 text-xs uppercase tracking-widest shadow-lg transition-all duration-300 hover:bg-brand-dark hover:text-white w-3/4 text-center">
+                            Comprar
+                        </button>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <h3 class="font-serif text-lg text-brand-dark">Camisa Social Oxford</h3>
+                        <p class="text-gray-500 text-sm mt-1">R$ 390,00</p>
+                    </div>
+                </div>
+
+                <!-- Produto 13 -->
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden bg-gray-100 aspect-[3/4]">
+                        <img src="https://images.unsplash.com/photo-1504198458649-3128b932f49e?q=80&w=1974&auto=format&fit=crop" alt="Cardigan Tricô Premium" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                        <button onclick="openCheckout('Cardigan Tricô Premium', 340.00, 'https://images.unsplash.com/photo-1504198458649-3128b932f49e?q=80&w=1974&auto=format&fit=crop')" class="absolute bottom-6 left-1/2 transform -translate-x-1/2 translate-y-20 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 bg-white text-brand-dark px-8 py-3 text-xs uppercase tracking-widest shadow-lg transition-all duration-300 hover:bg-brand-dark hover:text-white w-3/4 text-center">
+                            Comprar
+                        </button>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <h3 class="font-serif text-lg text-brand-dark">Cardigan Tricô Premium</h3>
+                        <p class="text-gray-500 text-sm mt-1">R$ 340,00</p>
+                    </div>
+                </div>
+
+                <!-- Produto 14 -->
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden bg-gray-100 aspect-[3/4]">
+                        <img src="https://images.unsplash.com/photo-1548863227-3af567e95802?q=80&w=1974&auto=format&fit=crop" alt="Short Alfaiataria Cinto" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                        <button onclick="openCheckout('Short Alfaiataria Cinto', 290.00, 'https://images.unsplash.com/photo-1548863227-3af567e95802?q=80&w=1974&auto=format&fit=crop')" class="absolute bottom-6 left-1/2 transform -translate-x-1/2 translate-y-20 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 bg-white text-brand-dark px-8 py-3 text-xs uppercase tracking-widest shadow-lg transition-all duration-300 hover:bg-brand-dark hover:text-white w-3/4 text-center">
+                            Comprar
+                        </button>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <h3 class="font-serif text-lg text-brand-dark">Short Alfaiataria Cinto</h3>
+                        <p class="text-gray-500 text-sm mt-1">R$ 290,00</p>
+                    </div>
+                </div>
+
+                <!-- Produto 15 -->
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden bg-gray-100 aspect-[3/4]">
+                        <img src="https://images.unsplash.com/photo-1582142387140-5e589133604f?q=80&w=1976&auto=format&fit=crop" alt="Vestido Tubinho Preto" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                        <button onclick="openCheckout('Vestido Tubinho Preto', 580.00, 'https://images.unsplash.com/photo-1582142387140-5e589133604f?q=80&w=1976&auto=format&fit=crop')" class="absolute bottom-6 left-1/2 transform -translate-x-1/2 translate-y-20 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 bg-white text-brand-dark px-8 py-3 text-xs uppercase tracking-widest shadow-lg transition-all duration-300 hover:bg-brand-dark hover:text-white w-3/4 text-center">
+                            Comprar
+                        </button>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <h3 class="font-serif text-lg text-brand-dark">Vestido Tubinho Preto</h3>
+                        <p class="text-gray-500 text-sm mt-1">R$ 580,00</p>
+                    </div>
+                </div>
+
+                <!-- Produto 16 -->
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden bg-gray-100 aspect-[3/4]">
+                        <img src="https://images.unsplash.com/photo-1629864275069-42b786c12143?q=80&w=1974&auto=format&fit=crop" alt="Trench Coat Bege" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                        <button onclick="openCheckout('Trench Coat Bege', 1450.00, 'https://images.unsplash.com/photo-1629864275069-42b786c12143?q=80&w=1974&auto=format&fit=crop')" class="absolute bottom-6 left-1/2 transform -translate-x-1/2 translate-y-20 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 bg-white text-brand-dark px-8 py-3 text-xs uppercase tracking-widest shadow-lg transition-all duration-300 hover:bg-brand-dark hover:text-white w-3/4 text-center">
+                            Comprar
+                        </button>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <h3 class="font-serif text-lg text-brand-dark">Trench Coat Bege</h3>
+                        <p class="text-gray-500 text-sm mt-1">R$ 1.450,00</p>
+                    </div>
+                </div>
+
+                <!-- Produto 17 -->
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden bg-gray-100 aspect-[3/4]">
+                        <img src="https://images.unsplash.com/photo-1616149562385-1d84e79478bb?q=80&w=1974&auto=format&fit=crop" alt="Body Renda Valência" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                        <button onclick="openCheckout('Body Renda Valência', 260.00, 'https://images.unsplash.com/photo-1616149562385-1d84e79478bb?q=80&w=1974&auto=format&fit=crop')" class="absolute bottom-6 left-1/2 transform -translate-x-1/2 translate-y-20 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 bg-white text-brand-dark px-8 py-3 text-xs uppercase tracking-widest shadow-lg transition-all duration-300 hover:bg-brand-dark hover:text-white w-3/4 text-center">
+                            Comprar
+                        </button>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <h3 class="font-serif text-lg text-brand-dark">Body Renda Valência</h3>
+                        <p class="text-gray-500 text-sm mt-1">R$ 260,00</p>
+                    </div>
+                </div>
+
+                 <!-- Produto 18 -->
+                 <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden bg-gray-100 aspect-[3/4]">
+                        <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?q=80&w=2080&auto=format&fit=crop" alt="Óculos Escuros Oversized" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                        <button onclick="openCheckout('Óculos Escuros Oversized', 320.00, 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?q=80&w=2080&auto=format&fit=crop')" class="absolute bottom-6 left-1/2 transform -translate-x-1/2 translate-y-20 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 bg-white text-brand-dark px-8 py-3 text-xs uppercase tracking-widest shadow-lg transition-all duration-300 hover:bg-brand-dark hover:text-white w-3/4 text-center">
+                            Comprar
+                        </button>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <h3 class="font-serif text-lg text-brand-dark">Óculos Escuros Oversized</h3>
+                        <p class="text-gray-500 text-sm mt-1">R$ 320,00</p>
+                    </div>
+                </div>
+
+                 <!-- Produto 19 -->
+                 <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden bg-gray-100 aspect-[3/4]">
+                        <img src="https://images.unsplash.com/photo-1620799140408-ed5341cd2431?q=80&w=2072&auto=format&fit=crop" alt="Macacão Linho" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                        <button onclick="openCheckout('Macacão Pantacourt Linho', 750.00, 'https://images.unsplash.com/photo-1620799140408-ed5341cd2431?q=80&w=2072&auto=format&fit=crop')" class="absolute bottom-6 left-1/2 transform -translate-x-1/2 translate-y-20 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 bg-white text-brand-dark px-8 py-3 text-xs uppercase tracking-widest shadow-lg transition-all duration-300 hover:bg-brand-dark hover:text-white w-3/4 text-center">
+                            Comprar
+                        </button>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <h3 class="font-serif text-lg text-brand-dark">Macacão Pantacourt Linho</h3>
+                        <p class="text-gray-500 text-sm mt-1">R$ 750,00</p>
+                    </div>
+                </div>
+
+                <!-- Produto 20 -->
+                 <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden bg-gray-100 aspect-[3/4]">
+                        <img src="https://images.unsplash.com/photo-1620163332467-3392762a4392?q=80&w=1974&auto=format&fit=crop" alt="Cinto Couro Fivela Dupla" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                        <button onclick="openCheckout('Cinto Couro Fivela Dupla', 180.00, 'https://images.unsplash.com/photo-1620163332467-3392762a4392?q=80&w=1974&auto=format&fit=crop')" class="absolute bottom-6 left-1/2 transform -translate-x-1/2 translate-y-20 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 bg-white text-brand-dark px-8 py-3 text-xs uppercase tracking-widest shadow-lg transition-all duration-300 hover:bg-brand-dark hover:text-white w-3/4 text-center">
+                            Comprar
+                        </button>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <h3 class="font-serif text-lg text-brand-dark">Cinto Couro Fivela Dupla</h3>
+                        <p class="text-gray-500 text-sm mt-1">R$ 180,00</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção do Curso -->
+    <section id="course" class="py-24 bg-brand-pink relative overflow-hidden">
+        <!-- Elemento decorativo -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-20 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-16">
+            <div class="w-full md:w-1/2 relative">
+                <div class="relative z-10 p-2 border border-brand-rose">
+                    <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=1976&auto=format&fit=crop" alt="Curso de Moda" class="w-full h-auto shadow-2xl">
+                </div>
+                <!-- Quadrado decorativo -->
+                <div class="absolute -bottom-4 -left-4 w-full h-full border border-brand-dark -z-0"></div>
+            </div>
+            
+            <div class="w-full md:w-1/2 text-left">
+                <span class="text-brand-rose text-xs uppercase tracking-[0.2em] font-bold">Educação</span>
+                <h2 class="text-4xl md:text-5xl font-serif text-brand-dark mt-2 mb-6">Masterclass de Estilo & Imagem</h2>
+                <p class="text-gray-600 mb-8 leading-relaxed">
+                    Transforme sua relação com a moda. Aprenda com Camila Priolli os segredos para construir uma imagem pessoal poderosa, autêntica e alinhada com seus objetivos profissionais. Um curso completo do básico ao avançado.
+                </p>
+                
+                <ul class="space-y-4 mb-8">
+                    <li class="flex items-center text-sm text-gray-700">
+                        <i class="fas fa-check text-brand-rose mr-3"></i> 12 Módulos Completos
+                    </li>
+                    <li class="flex items-center text-sm text-gray-700">
+                        <i class="fas fa-check text-brand-rose mr-3"></i> Material Didático em PDF
+                    </li>
+                    <li class="flex items-center text-sm text-gray-700">
+                        <i class="fas fa-check text-brand-rose mr-3"></i> Certificado de Conclusão
+                    </li>
+                </ul>
+
+                <button onclick="openCheckout('Masterclass de Estilo Completo', 1497.00, 'https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=1976&auto=format&fit=crop')" class="bg-brand-dark text-white px-10 py-4 text-xs font-semibold uppercase tracking-widest hover:bg-brand-rose transition-all duration-300 shadow-xl">
+                    Inscrever-se Agora
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-brand-dark text-white pt-20 pb-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 border-b border-gray-800 pb-12">
+                
+                <!-- Coluna 1 -->
+                <div class="text-center md:text-left">
+                    <span class="font-serif text-2xl tracking-widest font-semibold text-white uppercase block mb-6">
+                        Camila <span class="text-brand-rose">Priolli</span>
+                    </span>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Redefinindo o luxo acessível e a educação de moda no Brasil.
+                    </p>
+                    <!-- Icones de Rede Social removidos conforme solicitado -->
+                </div>
+
+                <!-- Coluna 2 -->
+                <div class="text-center">
+                    <h4 class="text-sm uppercase tracking-[0.2em] mb-6 font-semibold">Atendimento</h4>
+                    <p class="text-gray-400 text-sm mb-2">Segunda a Sexta: 09h às 18h</p>
+                    <a href="mailto:sac@camilapriolli.com" class="text-brand-rose text-sm block mb-1 hover:text-white transition-colors">sac@camilapriolli.com</a>
+                    <a href="mailto:contato@camilapriolli.com" class="text-gray-400 text-sm hover:text-white transition-colors">contato@camilapriolli.com</a>
+                </div>
+
+                <!-- Coluna 3 -->
+                <div class="text-center md:text-right">
+                    <h4 class="text-sm uppercase tracking-[0.2em] mb-6 font-semibold">Newsletter</h4>
+                    <form class="flex flex-col items-center md:items-end gap-3">
+                        <input type="email" placeholder="Seu melhor e-mail" class="bg-gray-800 border-none text-white px-4 py-2 w-full md:w-64 text-sm focus:ring-1 focus:ring-brand-rose">
+                        <button type="button" class="text-xs uppercase tracking-widest border border-white px-6 py-2 hover:bg-white hover:text-brand-dark transition-all">Assinar</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="text-center pt-8">
+                <p class="text-gray-600 text-xs">© 2025 Camila Priolli. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- ================= MODAIS ================= -->
+
+    <!-- Modal 1: Checkout / Dados (Fundo Escuro Transparente) -->
+    <div id="modal-checkout" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-black bg-opacity-70 backdrop-blur-sm" onclick="closeModal('modal-checkout')"></div>
+        
+        <!-- Conteúdo do Modal -->
+        <div class="relative bg-white w-full max-w-2xl shadow-2xl max-h-[90vh] overflow-y-auto animate-fade-in-up z-10 rounded-sm">
+            
+            <!-- Header do Modal -->
+            <div class="flex justify-between items-center p-6 border-b border-gray-100 bg-white sticky top-0 z-20">
+                <h3 class="font-serif text-2xl text-brand-dark">Finalizar Pedido</h3>
+                <button onclick="closeModal('modal-checkout')" class="text-gray-400 hover:text-brand-dark transition-colors">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Corpo -->
+            <div class="p-8">
+                <!-- Resumo do Produto -->
+                <div class="flex items-center gap-4 mb-8 bg-brand-pink p-4 rounded-sm">
+                    <img id="checkout-img" src="" alt="Produto" class="w-16 h-16 object-cover rounded-sm">
+                    <div>
+                        <h4 id="checkout-title" class="font-serif text-lg text-brand-dark font-bold">Nome do Produto</h4>
+                        <p id="checkout-price" class="text-brand-rose font-medium">R$ 0,00</p>
+                    </div>
+                </div>
+
+                <form id="checkout-form" onsubmit="event.preventDefault(); goToPix();">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        
+                        <!-- Dados Pessoais -->
+                        <div class="col-span-1 md:col-span-2">
+                            <h5 class="text-xs uppercase tracking-widest text-gray-500 mb-4 border-b pb-2">Dados Pessoais</h5>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Nome Completo</label>
+                            <input type="text" required class="input-premium w-full p-3 text-sm" placeholder="Ex: Ana Silva">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">E-mail</label>
+                            <input type="email" required class="input-premium w-full p-3 text-sm" placeholder="Ex: ana@email.com">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Telefone / WhatsApp</label>
+                            <input type="tel" required class="input-premium w-full p-3 text-sm" placeholder="(11) 99999-9999">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">CPF</label>
+                            <input type="text" required class="input-premium w-full p-3 text-sm" placeholder="000.000.000-00">
+                        </div>
+
+                        <!-- Endereço -->
+                        <div class="col-span-1 md:col-span-2 mt-2">
+                            <h5 class="text-xs uppercase tracking-widest text-gray-500 mb-4 border-b pb-2">Endereço de Entrega</h5>
+                        </div>
+
+                        <div class="md:col-span-1">
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">CEP</label>
+                            <div class="flex gap-2">
+                                <input type="text" id="cep" required class="input-premium w-full p-3 text-sm" placeholder="00000-000">
+                                <button type="button" onclick="buscarCep()" class="bg-gray-100 px-3 text-xs uppercase hover:bg-gray-200">Buscar</button>
+                            </div>
+                        </div>
+                        <div class="md:col-span-1">
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Cidade</label>
+                            <input type="text" id="cidade" required class="input-premium w-full p-3 text-sm">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Endereço</label>
+                            <input type="text" id="endereco" required class="input-premium w-full p-3 text-sm" placeholder="Rua, Avenida...">
+                        </div>
+                        <div class="md:col-span-1">
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Número</label>
+                            <input type="text" required class="input-premium w-full p-3 text-sm">
+                        </div>
+                        <div class="md:col-span-1">
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Bairro</label>
+                            <input type="text" id="bairro" required class="input-premium w-full p-3 text-sm">
+                        </div>
+
+                    </div>
+
+                    <button type="submit" class="w-full bg-brand-dark text-white py-4 uppercase text-sm tracking-[0.2em] font-semibold hover:bg-brand-rose transition-colors shadow-lg mt-4 flex justify-center items-center gap-2">
+                        <span>Ir para Pagamento</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2: Pagamento PIX -->
+    <div id="modal-pix" class="fixed inset-0 z-[60] hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black bg-opacity-80 backdrop-blur-sm"></div>
+        
+        <div class="relative bg-white w-full max-w-md shadow-2xl p-8 text-center animate-fade-in-up border-t-4 border-brand-rose z-10 rounded-sm">
+            
+            <div class="mb-6">
+                <i class="fas fa-qrcode text-4xl text-brand-dark mb-4"></i>
+                <h3 class="font-serif text-2xl text-brand-dark mb-2">Pagamento via PIX</h3>
+                <p class="text-sm text-gray-500">Escaneie o QR Code ou use o Copia e Cola.</p>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg mb-6 border border-gray-100 flex justify-center">
+                <!-- Placeholder de QR Code -->
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-426614174000520400005303986540510.005802BR5913CamilaPriolli6008SaoPaulo62070503***6304E2CA" alt="QR Code PIX" class="mix-blend-multiply">
+            </div>
+
+            <div class="mb-6">
+                <p class="text-xs font-bold text-gray-400 uppercase mb-2">Pix Copia e Cola</p>
+                <div class="flex">
+                    <input type="text" value="00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-426614174000520400005303986540510.005802BR5913CamilaPriolli6008SaoPaulo62070503***6304E2CA" id="pix-code" readonly class="w-full bg-gray-100 text-gray-500 text-xs p-3 border border-r-0 rounded-l focus:outline-none overflow-hidden">
+                    <button onclick="copyPix()" class="bg-brand-rose text-white px-4 py-2 rounded-r hover:bg-brand-dark transition-colors">
+                        <i class="far fa-copy"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="text-xs text-gray-400 mb-8">
+                <i class="fas fa-clock mr-1"></i> O código expira em 30 minutos.
+            </div>
+
+            <button onclick="finishOrder()" class="w-full border border-brand-dark text-brand-dark hover:bg-brand-dark hover:text-white py-3 uppercase text-xs tracking-widest transition-colors">
+                Já fiz o pagamento
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript Lógica -->
+    <script>
+        // Função para formatar preço
+        const formatMoney = (value) => {
+            return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        };
+
+        // 1. Abrir Modal de Checkout com dados do produto
+        function openCheckout(title, price, imgUrl) {
+            document.getElementById('checkout-title').innerText = title;
+            document.getElementById('checkout-price').innerText = formatMoney(price);
+            document.getElementById('checkout-img').src = imgUrl;
+            
+            const modal = document.getElementById('modal-checkout');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Impede scroll do body
+        }
+
+        // 2. Fechar Modais
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+            document.body.style.overflow = 'auto'; // Libera scroll
+        }
+
+        // 3. Simulação de busca de CEP (apenas preenchimento visual)
+        function buscarCep() {
+            const cepInput = document.getElementById('cep').value;
+            if(cepInput.length >= 8) {
+                // Simulando preenchimento automático
+                document.getElementById('endereco').value = "Avenida Paulista";
+                document.getElementById('bairro').value = "Bela Vista";
+                document.getElementById('cidade').value = "São Paulo - SP";
+                showToast("Endereço encontrado!");
+            } else {
+                showToast("Digite um CEP válido.");
+            }
+        }
+
+        // 4. Ir para o Modal de PIX (Step 2)
+        function goToPix() {
+            // Fecha o primeiro modal
+            document.getElementById('modal-checkout').classList.add('hidden');
+            
+            // Abre o segundo modal
+            const pixModal = document.getElementById('modal-pix');
+            pixModal.classList.remove('hidden');
+        }
+
+        // 5. Copiar Código PIX
+        function copyPix() {
+            const copyText = document.getElementById("pix-code");
+            
+            // Seleciona o texto
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); // Para mobile
+
+            // Copia para área de transferência
+            navigator.clipboard.writeText(copyText.value);
+            
+            showToast("Código PIX copiado!");
+        }
+
+        // 6. Finalizar
+        function finishOrder() {
+            closeModal('modal-pix');
+            showToast("Aguardando confirmação do banco...");
+            
+            setTimeout(() => {
+                showToast("Pedido Confirmado! Verifique seu e-mail.");
+            }, 2000);
+        }
+
+        // Sistema de Notificação (Toast)
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const msgEl = document.getElementById('toast-msg');
+            
+            msgEl.innerText = message;
+            toast.classList.remove('translate-x-full'); // Aparece
+            
+            setTimeout(() => {
+                toast.classList.add('translate-x-full'); // Esconde após 3s
+            }, 3000);
+        }
+
+        // Navbar Sticky Effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-sm');
+                navbar.style.paddingTop = '0';
+                navbar.style.paddingBottom = '0';
+            } else {
+                navbar.classList.remove('shadow-sm');
+            }
+        });
+    </script>
+</body>
+</html>
